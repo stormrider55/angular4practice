@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "dist",
+      "outDir": "../blog/public/app",
       "assets": [
         "assets",
         "favicon.ico"
@@ -18,8 +18,11 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
-      "styles": [
-        "styles.css"
+      "styles": ["../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "styles.css",
+         "../node_modules/font-awesome/css/font-awesome.css",
+         "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
+         "../node_modules/ladda/dist/ladda.min.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

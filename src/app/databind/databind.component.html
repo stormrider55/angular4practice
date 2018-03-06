@@ -1,0 +1,22 @@
+<p>
+  databind works!
+</p>
+<br>
+<img src="{{ imageDisplay }}" height="200" width="200" />
+<img [src]="imageDisplay" height="200" width="200"/>
+<img bind-src="imageDisplay" height="200" width="200"/>
+
+<br/>
+<input type="text" value="{{ sayHello() }}" />
+<input type="text" [value]="sayHello()" />
+<input type="text" bind-value="sayHello()" />
+
+
+<br/>
+<input type="text" value="Magnet Brains" (click)="showvalue($event)" (keyup)="showvalue($event)" />
+
+<br/>
+<br/>
+<input type="text" value="test data for two way binding" [(ngModel)]="showvalueinput" />
+<br/>
+<p>Show Value Of Input Box: {{ showvalueinput }}</p>

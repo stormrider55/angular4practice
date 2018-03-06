@@ -1,0 +1,146 @@
+<ngx-loading [show]="loading_list" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+<div class="container">
+
+  <br>
+
+	<div class="row">
+        <div class="panel panel-default user_panel">
+            <div class="panel-heading">
+                <h6 class="panel-title" *ngIf="count ">{{ count }} users found</h6>
+                <select class="" style="width:50%;" [ngModel]="selected_data" (ngModelChange)="onFilterChange($event)">
+                  <option value="0">All</option>
+                    <option value="1">Super Admin</option>
+                  <option value="2">Admin</option>
+                  <option value="3">Client</option>
+                </select>
+            </div>
+            <br>
+            <div class="panel-body">
+				          <div class="table-container">
+                    <table class="table-users table" border="0">
+                        <tbody *ngIf="!filerFlag " >
+                            <tr *ngFor="let user of allUsers" (click) = "showUserDetails(user)">
+                                <td width="10" align="center">
+                                    <i class="fa fa-2x fa-user fw"></i>
+                                </td>
+                                <td>
+                                     {{user.first_name}} {{user.last_name}}<br><i class="fa fa-envelope"></i>
+                                     <small class="text-muted">{{user.email}}</small>
+                                </td>
+                                <td>
+                                    {{user.role_name}}
+                                </td>
+                                <td align="center">
+                                    <small class="text-muted">{{user.company_name}}</small>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="filerFlag">
+                            <tr *ngFor="let user of filteredData" (click) = "showUserDetails(user)">
+                                <td width="10" align="center">
+                                    <i class="fa fa-2x fa-user fw"></i>
+                                </td>
+                                <td>
+                                     {{user.first_name}} {{user.last_name}}<br><i class="fa fa-envelope"></i>
+                                     <small class="text-muted">{{user.email}}</small>
+                                </td>
+                                <td>
+                                    {{user.role_name}}
+                                </td>
+                                <td align="center">
+                                    <small class="text-muted">{{user.company_name}}</small>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <div style="text-align:center;">
+                    <button class="btn btn-primary override_ladda"(click)="loadMore()" [ladda]="load_moreLoading" data-style="zoom-in" *ngIf="count">Load More</button>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default user_panel" *ngIf="show" style=" padding-left: 30px;">
+          <div class="panel-heading">
+              <h3 class="panel-title">&nbsp;</h3>
+
+          </div>
+          <div class="panel-body" style="padding-top: 47px;">
+            <div class="card card-body bg-light" >
+              <button type="button" class="close" aria-label="Close" style="text-align: right;" (click) = "closeDetails()">
+              <span aria-hidden="true">&times;</span>
+              </button>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
+                    </div>
+                    <div class="col-sm-6 col-md-8">
+                        <h4>
+                            {{userDetails.first_name}} {{userDetails.last_name}}</h4>
+                        <small><cite title="San Francisco, USA">{{userDetails.address}}, {{userDetails.city}},{{userDetails.country}},{{userDetails.zip_code}} <i class="glyphicon glyphicon-map-marker">
+                        </i></cite></small>
+                        <p>
+                            <i class="glyphicon glyphicon-envelope"></i>{{userDetails.email}}
+                            <br />
+                            <i class="glyphicon glyphicon-globe"></i><a href="javascript:void(0)">{{userDetails.company_name}}</a>
+                            <br />
+                            <i class="glyphicon glyphicon-gift"></i>{{userDetails.role_name}}</p>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary">
+                                {{userDetails.category_name}}</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-body bg-light" >
+              <button type="button" class="close" aria-label="Close" style="text-align: right;" (click) = "closeDetails()">
+              <span aria-hidden="true">&times;</span>
+              </button>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
+                    </div>
+                    <div class="col-sm-6 col-md-8">
+                        <h4>
+                            {{api_user_details["first_name"]}} {{api_user_details["last_name"]}}</h4>
+                        <small><cite title="San Francisco, USA">{{api_user_details["address"]}}, {{api_user_details["city"]}},{{api_user_details["country"]}},{{api_user_details["zip_code"]}} <i class="glyphicon glyphicon-map-marker">
+                        </i></cite></small>
+                        <p>
+                            <i class="glyphicon glyphicon-envelope"></i>{{api_user_details["email"]}}
+                            <br />
+                            <i class="glyphicon glyphicon-globe"></i><a href="javascript:void(0)">{{api_user_details["company_name"]}}</a>
+                            <br />
+                            <i class="glyphicon glyphicon-gift"></i>{{api_user_details["role_name"]}}</p>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary">
+                                {{api_user_details["category_name"]}}</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+          </div>
+        </div>
+
+	</div>
+  <div class="row">&nbsp;</div>
+
+
+
+
+</div>
+
+<!-- <div class="search-results"
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="50"
+      (scrolled)="onScroll()">
+  </div> -->

@@ -1,0 +1,112 @@
+<app-spinner> </app-spinner>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+<div class="container">
+  <div class="row">&nbsp;</div>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th>City</th>
+              <th>Country</th>
+              <th>Zip_code</th>
+              <th>Company</th>
+              <th>Category</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of allUsers | paginate: { itemsPerPage: 10, currentPage: p }">
+              <td>{{user.first_name}}</td>
+              <td>{{user.last_name}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.address}}</td>
+              <td>{{user.city}}</td>
+              <td>{{user.country}}</td>
+              <td>{{user.zip_code}}</td>
+              <td>{{user.company_name}}</td>
+              <td>{{user.category_name}}</td>
+              <td>{{user.role_name}}</td>
+              <td>
+                <button class="btn btn-info" (click)="openEditModal(user)"><span class="fa fa-pencil"></span></button>
+                <button class="btn btn-danger" (click)="openDeleteModal(user.user_id)"><span class="fa fa-close"></span></button>
+              </td>
+            </tr>
+          </tbody>
+
+      </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+
+<ngx-smart-modal #myModal [identifier]="'myModal'">
+  <div class="container">
+      <form class="form-horizontal" #signupForm="ngForm"  novalidate>
+          <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                  <h2>Edit User</h2>
+                  <hr>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3 field-label-responsive">
+                  <label for="name">Name</label>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                          <input type="text" name="name" class="form-control" id="name"
+                                 required autofocus [(ngModel)]="editUserData.first_name" required >
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3 field-label-responsive">
+                  <label for="email">E-Mail</label>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
+                          <input type="text" name="email" class="form-control" id="email"
+                                 required autofocus [(ngModel)]="editUserData.email">
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      </form>
+
+  </div>
+  <button class="btn btn-default"(click)="myModal.close()">Close</button>
+    <button  class="btn btn-success" style="float:right;" (click)="updateUserData()"> Update</button>
+
+</ngx-smart-modal>
+
+<ngx-smart-modal #deleteModal [identifier]="'deleteModal'">
+
+  <div class="container">
+        <div class="modal-header">
+          <h3>Delete User</h3>
+        </div>
+        <div class="modal-body">
+          <p>You are about to delete.</p>
+          <p>Do you want to proceed?</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default"(click)="deleteModal.close()">No</button>
+          <button  class="btn btn-danger" style="float:right;" (click)="deleteUser()"> Yes</button>
+        </div>
+  </div>
+
+</ngx-smart-modal>

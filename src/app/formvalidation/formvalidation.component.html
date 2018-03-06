@@ -1,0 +1,57 @@
+<div *ngIf="!name; else forminfo">
+  <form [formGroup]="rForm" (ngSubmit)="addPost(rForm.value)">
+    <div class="form-container">
+      <div class="row">
+        <div class="col-md-6">
+          <h1>My Reactive Form</h1>
+        </div>
+        <div class="col-md-6">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Name</label>
+        </div>
+        <div class="col-md-6">
+          <input type="text" formControlName="name">
+          <div class="alert" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">{{ titleAlert }}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Email
+          </label>
+        </div>
+        <div class="col-md-6">
+          <input type="email" formControlName="email">
+          <div class="alert" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">{{ emailAlert }}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description
+          </label>
+        </div>
+        <div class="col-md-6">
+          <textarea  formControlName="description"></textarea>
+          <div class="alert" *ngIf="!rForm.controls['description'].valid && rForm.controls['description'].touched">You must specify a description that's between 30 and 500 characters.</div>
+        </div>
+      </div>
+
+
+        <input type="checkbox" name="validate" formControlName="validate" value="1"> On
+        <input type="submit" class="button expanded" value="Submit Form" [disabled]="!rForm.valid">
+      </div>
+
+  </form>
+</div>
+
+<ng-template #forminfo>
+  <div class="form-container">
+    <div class="row columns">
+        <h1>name : {{ name }}</h1>
+        <br>
+        <p>desc : {{ description }}</p>
+    </div>
+  </div>
+</ng-template>
