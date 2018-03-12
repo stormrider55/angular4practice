@@ -51,7 +51,6 @@ export class InfinitescrollComponent implements OnInit {
       },400);
 	}
   getUsers(param){
-    console.log(param);
     this.apiSerivce.post(this.pagination_url,param)
     .subscribe(data => {
       this.allUsers = this.allUsers.concat(data["users"]);
