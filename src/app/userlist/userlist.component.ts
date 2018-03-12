@@ -9,6 +9,7 @@ import {Observable} from "rxjs/Observable";
 import "rxjs/Rx";
 import {ApiService} from "../shared";
 import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading';
+import { ActivatedRoute , Resolve, Router, RouterStateSnapshot,CanActivate } from '@angular/router';
 
 @Component({
   selector: 'app-userlist',
@@ -29,13 +30,21 @@ export class UserlistComponent implements OnInit {
   update_user_url:string;
   delete_user_url:string;
 
-  constructor(private http: HttpClient,public ngxSmartModalService: NgxSmartModalService,public toastr: ToastsManager,vcr: ViewContainerRef,private apiSerivce: ApiService) {
+  constructor(
+    route: ActivatedRoute,
+    private http: HttpClient,
+    public ngxSmartModalService: NgxSmartModalService,
+    public toastr: ToastsManager,
+    vcr: ViewContainerRef,
+    private apiSerivce: ApiService
+  ) {
     this.toastr.setRootViewContainerRef(vcr);
     this.profileImagePath = '/app/assets/img/user.jpg';
     this.get_user_url = '/getUsers';
     this.update_user_url = '/updateUser';
     this.delete_user_url = '/deleteUser';
    }
+
   ngOnInit() {
     this.getUsers();
   }
