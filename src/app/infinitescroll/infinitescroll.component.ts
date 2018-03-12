@@ -2,10 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading';
+import {ApiService} from "../shared";
 @Component({
   selector: 'app-infinitescroll',
   templateUrl: './infinitescroll.component.html',
-  styleUrls: ['./infinitescroll.component.css']
+  styleUrls: ['./infinitescroll.component.css'],
+  providers: [ApiService]
 })
 export class InfinitescrollComponent implements OnInit {
   public loading_list = false;
@@ -55,6 +57,17 @@ export class InfinitescrollComponent implements OnInit {
   showUserDetails(user){
     this.show = true;
     this.userDetails = user;
+    // this.apiSerivce.get_with_param(this.get_user_url)
+    // .subscribe(
+    //    data =>{
+    //      this.allUsers = data;
+    //      this.loading_list = false;
+    //    },
+    //      error => {
+    //        console.log("Error :: " + error);
+    //        this.loading_list = false;
+    //      }
+    // )
     this.http.get('http://localhost:8000/api/getUserDetails/'+user.user_id).subscribe(data => {
       this.api_user_details = data;
     });
