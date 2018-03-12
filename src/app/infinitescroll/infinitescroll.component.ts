@@ -24,8 +24,15 @@ export class InfinitescrollComponent implements OnInit {
   selected_data:number=0;
   filter_data:any=0;
   load_moreLoading: boolean = false;
-  constructor(private http: HttpClient) { }
-
+  get_user_url: string;
+  pagination_url: string;
+  constructor(
+    private http: HttpClient,
+    private apiSerivce: ApiService
+  ) {
+    this.get_user_url = '/getUserDetails';
+    this.pagination_url = '/getUsersPagination';
+   }
   ngOnInit() {
     this.loading_list = true;
     this.limit = 10;
@@ -33,7 +40,6 @@ export class InfinitescrollComponent implements OnInit {
     var data = {'limit':this.limit,'offset':this.offset};
     this.getUsers(data);
   }
-
   loadMore () {
     this.load_moreLoading = true;
     this.limit = 10;
@@ -43,34 +49,33 @@ export class InfinitescrollComponent implements OnInit {
       setTimeout(()=>{
         this.load_moreLoading = false;
       },400);
-
-
 	}
   getUsers(param){
-    this.http.post('http://localhost:8000/api/getUsersPagination',param).subscribe(data => {
+    console.log(param);
+    this.apiSerivce.post(this.pagination_url,param)
+    .subscribe(data => {
       this.allUsers = this.allUsers.concat(data["users"]);
       this.count = data["count"];
       this.loading_list = false;
       this.onFilterChange(this.filter_data);
-    });
+    },
+      error => {
+        console.log("Error :: " + error);
+      }
+    )
   }
   showUserDetails(user){
     this.show = true;
     this.userDetails = user;
-    // this.apiSerivce.get_with_param(this.get_user_url)
-    // .subscribe(
-    //    data =>{
-    //      this.allUsers = data;
-    //      this.loading_list = false;
-    //    },
-    //      error => {
-    //        console.log("Error :: " + error);
-    //        this.loading_list = false;
-    //      }
-    // )
-    this.http.get('http://localhost:8000/api/getUserDetails/'+user.user_id).subscribe(data => {
-      this.api_user_details = data;
-    });
+    this.apiSerivce.get_with_param(this.get_user_url,user.user_id)
+    .subscribe(
+       data =>{
+         this.api_user_details = data;
+       },
+         error => {
+           console.log("Error :: " + error);
+         }
+    )
   }
   closeDetails(){
     this.show = false;
